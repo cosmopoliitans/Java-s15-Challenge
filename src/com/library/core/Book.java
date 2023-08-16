@@ -10,6 +10,13 @@ public class Book {
     Category category;
     private boolean isBorrowed;
 
+
+    public Book(String bookName, Author author, Category category) {
+        this.bookName = bookName;
+        this.author = author;
+        this.category = category;
+    }
+
     public Book(int bookId, String bookName, Author author, Category category, boolean isBorrowed) {
         this.bookId = bookId;
         this.bookName = bookName;

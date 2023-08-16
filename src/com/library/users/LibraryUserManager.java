@@ -34,4 +34,15 @@ public class LibraryUserManager implements UserManager{
     public List<User> listUsers() {
         return new ArrayList<>(users);
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        for( User user : users ){
+            if(user.getUserName().equals(username)){
+                return user;
+            }
+        }
+        return null;
+    }
+
 }

@@ -10,4 +10,5 @@ public interface UserManager {
 
     List<User> listUsers();
 
+    User getUserByUsername(String username);
 }

@@ -1,14 +1,29 @@
 package com.library.core;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
+    private static final AtomicInteger idCounter = new AtomicInteger(1);
     private int userId;
     private String userName;
     private String userSurname;
     private String userPassword;
     private String userEmail;
     private int borrowedBooks;
+
+    public User(String userEmail, String userPassword) {
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+    }
+
+    public User(int userId, String userName, String userSurname, String userPassword, String userEmail) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userSurname = userSurname;
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+    }
 
     public User(int userId, String userName, String userSurname, String userPassword, String userEmail, int borrowedBooks) {
         this.userId = userId;
@@ -17,6 +32,9 @@ public class User {
         this.userPassword = userPassword;
         this.userEmail = userEmail;
         this.borrowedBooks = borrowedBooks;
+    }
+    public static int generateUserId() {
+        return idCounter.getAndIncrement();
     }
 
     public int getUserId() {
