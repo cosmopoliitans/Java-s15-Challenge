@@ -1,14 +1,13 @@
-package com.library.core;
+package com.library.model;
 
 public enum Category {
-    PHİLOSOPHY,
+    PHILOSOPHY,
     NOVEL,
     STORY,
     HOBBY,
     STUDY,
+    EDUCATION,
     ART,
     HISTORY,
-    SCIENCEFICTION,
-    EDUCATION;
-
+    SCIENCEFICTION;
 }

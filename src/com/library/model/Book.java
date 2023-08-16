@@ -1,44 +1,41 @@
-package com.library.core;
-
+package com.library.model;
 
 import java.util.Objects;
 
 public class Book {
-    private int bookId;
-    private String bookName;
+    private int book_id;
+    private String title;
     Author author;
     Category category;
-    private boolean isBorrowed;
-
-
-    public Book(String bookName, Author author, Category category) {
-        this.bookName = bookName;
+    boolean isBorrowed;
+    public Book(int book_id, String title, Author author, Category category) {
+        this.book_id = book_id;
+        this.title = title;
         this.author = author;
         this.category = category;
     }
-
-    public Book(int bookId, String bookName, Author author, Category category, boolean isBorrowed) {
-        this.bookId = bookId;
-        this.bookName = bookName;
+    public Book(int book_id, String title, Author author, Category category, boolean isBorrowed) {
+        this.book_id = book_id;
+        this.title = title;
         this.author = author;
         this.category = category;
         this.isBorrowed = isBorrowed;
     }
 
-    public int getBookId() {
-        return bookId;
+    public int getBook_id() {
+        return book_id;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBook_id(int book_id) {
+        this.book_id = book_id;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Author getAuthor() {
@@ -70,23 +67,22 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return bookId == book.bookId;
+        return book_id == book.book_id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookId);
+        return Objects.hash(book_id);
     }
 
     @Override
     public String toString() {
         return "Book{" +
-                "bookId=" + bookId +
-                ", bookName='" + bookName + '\'' +
+                "book_id=" + book_id +
+                ", title='" + title + '\'' +
                 ", author=" + author +
                 ", category=" + category +
                 ", isBorrowed=" + isBorrowed +
                 '}';
     }
-
 }
