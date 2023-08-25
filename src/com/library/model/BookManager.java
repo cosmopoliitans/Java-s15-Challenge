@@ -22,6 +22,10 @@ public class BookManager implements LibraryBookService {
         return database.getBookById(id);
     }
     @Override
+    public List<Book> getAllBooks() {
+        return database.getAllBooksDatabase();
+    }
+    @Override
     public List<Book> getBooksByTitle(String title){
         return database.getBooksByTitle(title);
     }
@@ -66,7 +70,7 @@ public class BookManager implements LibraryBookService {
     public void returnBook(User user, Book book) {
         database.returnBook(user, book);
     }
-    private double calculateFee(Book book) {
+    public double calculateFee(Book book) {
         double baseFee = 5.0; // Temel ücret
         double additionalFee = 2.0; // Ek ücret (örneğin kategorisine göre)
 
@@ -79,7 +83,7 @@ public class BookManager implements LibraryBookService {
         // Toplam ücreti hesapla
         return baseFee + additionalFee;
     }
-    private static List<Invoice> invoices = new ArrayList<>();
+    public static List<Invoice> invoices = new ArrayList<>();
 
     public void generateInvoice(User user, Book book) {
         double totalFee = calculateFee(book);

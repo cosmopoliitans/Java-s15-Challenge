@@ -20,6 +20,7 @@ public interface LibraryBookService {
     void updateBook(Book book); //kitap bilgilerini güncelleme
 
     void deleteBook(int id); //kitap silme
+    List<Book> getAllBooks();
 
     List<Book> getBooksByCategory(Category category); //kategoriye göre listeleme
 

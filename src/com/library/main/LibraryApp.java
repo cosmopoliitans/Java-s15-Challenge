@@ -95,8 +95,14 @@ public class LibraryApp {
         while (true) {
             System.out.println("1. Add New Book");
             System.out.println("2. Select Book");
-            System.out.println("10. Logout");
-            System.out.println("11. Exit");
+            System.out.println("3. Update Book Info");
+            System.out.println("4. Delete Book");
+            System.out.println("5. Borrow Book");
+            System.out.println("6. Return Book");
+            System.out.println("7. Generate Invoice");
+            System.out.println("8. List Books");
+            System.out.println("9. Logout");
+            System.out.println("10. Exit");
             System.out.print("Select an option: ");
 
             int choice = scanner.nextInt();
@@ -109,11 +115,29 @@ public class LibraryApp {
                 case 2:
                     selectBook();
                     break;
-                case 10:
+                case 3:
+                    updateBookInfo();
+                    break;
+                case 4:
+                    deleteBook();
+                    break;
+                /*case 5:
+                    borrowBook();
+                    break;
+                case 6:
+                    returnBook();
+                    break;
+                case 7:
+                    generateInvoice();
+                    break;*/
+                case 8:
+                    listBook();
+                    break;
+                case 9:
                     System.out.println("Logging out...");
                     currentUser = null;
                     return;
-                case 11:
+                case 10:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
@@ -143,7 +167,7 @@ public class LibraryApp {
     private static void selectBook() {
         System.out.print("Enter book ID: ");
         int bookId = scanner.nextInt();
-        scanner.nextLine(); // Boşluğu oku
+        scanner.nextLine();
 
         Book selectedBook = bookManager.getBookById(bookId);
         if (selectedBook != null) {
@@ -152,5 +176,147 @@ public class LibraryApp {
             System.out.println("Book not found.");
         }
     }
+    private static void updateBookInfo(){
+        System.out.println("Enter the book ID you want to update: ");
+        int bookId= scanner.nextInt();
+        scanner.nextLine();
+
+        Book bookToUpdate = bookManager.getBookById(bookId);
+
+        if(bookToUpdate != null){
+            System.out.println("Current book information: ");
+            System.out.println("Title: " + bookToUpdate.getTitle());
+            System.out.println("Author: " + bookToUpdate.getAuthor());
+            System.out.println("Category: " + bookToUpdate.getCategory());
+
+            System.out.println("Enter new information: ");
+            System.out.println("New title (press Enter to keep current title): ");
+            String newTitle = scanner.nextLine();
+            if (!newTitle.isEmpty()){
+                bookToUpdate.setTitle(newTitle);
+            }
+            System.out.println("New author name (press Enter to keep current author): ");
+            String newAuthorName = scanner.nextLine();
+            if(!newAuthorName.isEmpty()){
+                bookToUpdate.getAuthor().setName(newAuthorName);
+            }
+            System.out.println("New author surname (press Enter to keep current author): ");
+            String newAuthorSurname = scanner.nextLine();
+            if (!newAuthorSurname.isEmpty()){
+                bookToUpdate.getAuthor().setSurname(newAuthorSurname);
+            }
+            System.out.print("New category (press Enter to keep current category): ");
+            String newCategoryStr = scanner.nextLine();
+            if (!newCategoryStr.isEmpty()){
+                try {
+                    Category newCategory = Category.valueOf(newCategoryStr.toUpperCase());
+                    bookToUpdate.setCategory(newCategory);
+                }catch (IllegalArgumentException e){
+                    System.out.println("Invalid category. Book information not updated.");
+                    return;
+                }
+            }
+            bookManager.updateBook(bookToUpdate);
+            System.out.println("Book information updated successfully.");
+        } else {
+            System.out.println("Book with ID " + bookId + " not found.");
+        }
+    }
+
+
+
+    private static void deleteBook() {
+        System.out.print("Enter the book ID you want to delete: ");
+        listBook();
+        int bookId = scanner.nextInt();
+        scanner.nextLine();
+
+        Book bookToDelete = bookManager.getBookById(bookId);
+
+        if (bookToDelete != null) {
+            System.out.println("Are you sure you want to delete this book? (yes/no)");
+            String confirmation = scanner.nextLine();
+
+            if (confirmation.equalsIgnoreCase("yes")) {
+                bookManager.deleteBook(bookId);
+                System.out.println("Book deleted successfully.");
+            } else {
+                System.out.println("Book deletion canceled.");
+            }
+        } else {
+            System.out.println("Book with ID " + bookId + " not found.");
+        }
+    }
+
+   private static void listBook(){
+        List<Book> allBooks = bookManager.getAllBooks();
+        if (!allBooks.isEmpty()){
+            System.out.println("Book list: ");
+            for (Book book: allBooks){
+                System.out.println(book);
+            }
+        }if (allBooks.isEmpty()){
+           System.out.println("Library is empty.");
+       }
+        else {
+           System.out.println("Invalid choice. Pls choose again.");
+       }
+   }
+
+    /*private static void returnBook(){
+        System.out.println("Enter your email:");
+        String email = scanner.nextLine();
+
+        System.out.println("Enter book title:");
+        String bookTitle = scanner.nextLine();
+
+        User user = database.getUserByEmail(email);
+        Book book = bookManager.getBooksByTitle(bookTitle).stream()
+                .filter(b -> b.isBorrowed() && b.getBorrower().equals(user))
+                .findFirst()
+                .orElse(null);
+
+        if (user == null || book == null) {
+            System.out.println("User or borrowed book not found.");
+        } else {
+            bookManager.returnBook(user, book);
+            System.out.println("Book returned successfully!");
+        }
+    }
+
+    private static void generateInvoice() {
+        System.out.println("Enter your email:");
+        String email = scanner.nextLine();
+
+        User user = database.getUserByEmail(email);
+        if (user == null) {
+            System.out.println("User not found with the provided email.");
+            return;
+        }
+
+        System.out.println("Enter book title:");
+        String bookTitle = scanner.nextLine();
+
+        List<Book> books = database.getBooksByTitle(bookTitle);
+        if (books == null || books.isEmpty()) {
+            System.out.println("Book not found with the provided title.");
+            return;
+        }
+        Book book = books.get(0);
+
+        double totalFee = bookManager.calculateFee(book);
+        Invoice invoice = new Invoice(user, book, totalFee);
+
+        System.out.println("Invoice Details:");
+        System.out.println("User: " + user.getName());
+        System.out.println("Book: " + book.getTitle());
+        System.out.println("Total Fee: " + totalFee);
+
+        bookManager.invoices.add(invoice);
+    }*/
+
+
+
+
 
 }

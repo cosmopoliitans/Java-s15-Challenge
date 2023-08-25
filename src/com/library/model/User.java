@@ -64,6 +64,10 @@ public class User {
         return borrowedBooks;
     }
 
+    public void addBorrowedBook(Book book) {
+        borrowedBooks.add(book);
+    }
+
     public void setBorrowedBooks(List<Book> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
     }

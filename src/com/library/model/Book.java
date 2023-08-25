@@ -8,6 +8,17 @@ public class Book {
     Author author;
     Category category;
     boolean isBorrowed;
+    private User borrower;
+
+    public Book(int book_id, String title, Author author, Category category, boolean isBorrowed, User borrower) {
+        this.book_id = book_id;
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.isBorrowed = isBorrowed;
+        this.borrower = borrower;
+    }
+
     public Book(int book_id, String title, Author author, Category category) {
         this.book_id = book_id;
         this.title = title;
@@ -46,6 +57,10 @@ public class Book {
         this.author = author;
     }
 
+    public void setBorrower(User borrower) {
+        this.borrower = borrower;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -56,6 +71,9 @@ public class Book {
 
     public boolean isBorrowed() {
         return isBorrowed;
+    }
+    public User getBorrower() {
+        return borrower;
     }
 
     public void setBorrowed(boolean borrowed) {

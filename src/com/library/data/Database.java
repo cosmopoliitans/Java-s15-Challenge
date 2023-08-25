@@ -37,9 +37,20 @@ public class Database {
 
         Author author1 = new Author("J.K.", "Rowling", new ArrayList<>());
         Author author2 = new Author("George", "Orwell", new ArrayList<>());
-
+        Author author3 = new Author("Jane","Austen", new ArrayList<>());
         authors.put(author1.getName(), author1);
-        authors.put(author2.getName(), author1);
+        authors.put(author2.getName(), author2);
+        authors.put(author3.getName(), author3);
+
+
+
+        Book book1 = new Book(1, "Harry Potter and the Sorcerer's Stone", author1, Category.FANTASY);
+        Book book2 = new Book(2, "1984", author2, Category.DYSTOPIAN);
+        Book book3 = new Book(3, "Pride and Prejudice", author3, Category.ROMANCE);
+
+        books.put(book1.getBook_id(), book1);
+        books.put(book2.getBook_id(), book2);
+        books.put(book3.getBook_id(), book3);
 
 
     }
@@ -124,6 +135,9 @@ public class Database {
 
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
+    }
+    public List<Book> getAllBooksDatabase() {
+        return books.values().stream().toList();
     }
 
     @Override
