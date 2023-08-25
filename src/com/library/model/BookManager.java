@@ -83,7 +83,7 @@ public class BookManager implements LibraryBookService {
         // Toplam ücreti hesapla
         return baseFee + additionalFee;
     }
-    public static List<Invoice> invoices = new ArrayList<>();
+   /* public static List<Invoice> invoices = new ArrayList<>();
 
     public void generateInvoice(User user, Book book) {
         double totalFee = calculateFee(book);
@@ -93,6 +93,6 @@ public class BookManager implements LibraryBookService {
         System.out.println("Book: " + book.getTitle());
         System.out.println("Total Fee: " + totalFee);
         invoices.add(invoice);
-    }
+    }*/
 
 }
